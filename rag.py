@@ -22,7 +22,7 @@ class RAG:
         print(f"Number of chunks: {len(self.chunks)}")
         print(f"First chunk: {self.chunks[0]}")
     
-    def embed_data(self, embedding_model="nomic-embed-text", collection_name="rag-system"):
+    def embed_data(self, embedding_model="nomic-embed-text", collection_name="rag-system", base_url="http://localhost:11434"):
         self.vector_db = Chroma.from_documents(
             documents=self.chunks,
             embedding=OllamaEmbeddings(model=embedding_model),
@@ -30,7 +30,7 @@ class RAG:
         )
         print("Added to vector database.")
 
-        self.llm = ChatOllama(model=self.model)
+        self.llm = ChatOllama(model=self.model, base_url=base_url)
         QUERY_PROMPT = PromptTemplate(
             input_variables=["question"],
             template="""You are an AI language model assistant. Your task is to generate five different versions
