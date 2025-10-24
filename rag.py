@@ -25,7 +25,7 @@ class RAG:
     def embed_data(self, embedding_model="nomic-embed-text", collection_name="rag-system", base_url="http://localhost:11434"):
         self.vector_db = Chroma.from_documents(
             documents=self.chunks,
-            embedding=OllamaEmbeddings(model=embedding_model),
+            embedding=OllamaEmbeddings(model=embedding_model, base_url=base_url),
             collection_name=collection_name
         )
         print("Added to vector database.")
